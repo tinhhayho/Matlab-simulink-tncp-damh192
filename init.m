@@ -1,8 +1,8 @@
 % Nguyen Trung Tinh
 % tinh.nguyenhayho@hcmut.edu.vn
 % tinhhayho@gmail.com
-% fixed point designer tool
-%
+% 
+% yêu cầu UTF-8 để hiển thị đầy đủ kí tự
 %
 %
 %
@@ -13,6 +13,7 @@ Ts = 50e-6;
 Tmophong = 1;
 Iref1 = 2;
 Iref2 = 3;
+f_ref = 50; 
 omega_Ref = 2*pi*50;
 %% tao song sin tan so 50hz voi cac bien do khac nhau
 time1 = (0:Ts:1);
@@ -70,14 +71,14 @@ plot(fs, phobiendo3);
 
 Ia_coban = phobiendo1(51,1);
 I_baccao = 0;
-for i=2:200
+for i=2:100
     I_baccao =I_baccao + phobiendo1(i*50+1,1)^2;
 end
 THD1 = 100*I_baccao/(Ia_coban^2)
 
 Ib_coban = phobiendo2(51,1);
 I_baccao = 0;
-for i=2:200
+for i=2:100
     I_baccao =I_baccao + phobiendo2(i*50+1,1)^2;
 end
 THD2 = 100*I_baccao/(Ib_coban^2)
@@ -85,7 +86,7 @@ THD2 = 100*I_baccao/(Ib_coban^2)
 
 Ic_coban = phobiendo3(51,1);
 I_baccao = 0;
-for i=2:200
+for i=2:100
     I_baccao =I_baccao + phobiendo3(i*50+1,1)^2;
 end
 THD3 = 100*I_baccao/(Ic_coban^2)
@@ -96,11 +97,11 @@ out2 =  ans.logsout.getElement('iampha');
 out3 =  ans.logsout.getElement('ibeta');
 out4 =  ans.logsout.getElement('iclarke');
 
-iaref = out2.Values.Data(1:round(0.02/Ts),1);
-ibref = out3.Values.Data(1:round(0.02/Ts),1);
+iaref = out2.Values.Data(50:round(0.02/Ts)+50,1);
+ibref = out3.Values.Data(50:round(0.02/Ts)+50,1);
 
-iampre = out4.Values.Iampha.Data(1:round(0.02/Ts),1);
-ibepre = out4.Values.Ibeta.Data(1:round(0.02/Ts),1);
+iampre = out4.Values.Iampha.Data(50:round(0.02/Ts)+50,1);
+ibepre = out4.Values.Ibeta.Data(50:round(0.02/Ts)+50,1);
 
 [theta1, r1] = cart2pol(iaref, ibref);
 [theta2, r2] = cart2pol(iampre, ibepre);
@@ -109,6 +110,14 @@ polarplot(theta1, r1);
 hold on;
 polarplot(theta2, r2);
 
+%% vẽ dòng điện Ia* và Ia_p
+t_aref = 1:1:length(iaref);
+figure;
+plot(t_aref, iaref,'--','LineWidth',3);
+hold on;
+plot(t_aref, iampre,'LineWidth',1);
+legend(' dòng điện tham chiếu', ' dòng điện thật');
+title(' có bù trễ');
 
 
 

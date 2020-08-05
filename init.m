@@ -74,14 +74,14 @@ I_baccao = 0;
 for i=2:100
     I_baccao =I_baccao + phobiendo1(i*50+1,1)^2;
 end
-THD1 = 100*I_baccao/(Ia_coban^2)
+THD1 = 100*sqrt(I_baccao)/(Ia_coban)
 
 Ib_coban = phobiendo2(51,1);
 I_baccao = 0;
 for i=2:100
     I_baccao =I_baccao + phobiendo2(i*50+1,1)^2;
 end
-THD2 = 100*I_baccao/(Ib_coban^2)
+THD2 = 100*sqrt(I_baccao)/(Ib_coban)
 
 
 Ic_coban = phobiendo3(51,1);
@@ -89,7 +89,7 @@ I_baccao = 0;
 for i=2:100
     I_baccao =I_baccao + phobiendo3(i*50+1,1)^2;
 end
-THD3 = 100*I_baccao/(Ic_coban^2)
+THD3 = 100*sqrt(I_baccao)/(Ic_coban)
 
 %% ve toa doc cuc
 
@@ -116,7 +116,7 @@ figure;
 plot(t_aref, iaref,'--','LineWidth',3);
 hold on;
 plot(t_aref, iampre,'LineWidth',1);
-legend(' dòng điện tham chiếu', ' dòng điện thật');
+legend(' I* dòng điện tham chiếu', 'Ialpha dòng điện thật');
 title(' có bù trễ');
 
 
